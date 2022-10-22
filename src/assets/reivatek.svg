@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" version="1.1" viewBox="0 0 135.47 135.47" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+    <cc:license rdf:resource="http://creativecommons.org/licenses/by-nd/4.0/"/>
+   </cc:Work>
+   <cc:License rdf:about="http://creativecommons.org/licenses/by-nd/4.0/">
+    <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction"/>
+    <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution"/>
+    <cc:requires rdf:resource="http://creativecommons.org/ns#Notice"/>
+    <cc:requires rdf:resource="http://creativecommons.org/ns#Attribution"/>
+   </cc:License>
+  </rdf:RDF>
+ </metadata>
+ <g>
+  <path d="m61.815 85.433 53.94-1e-5 -27.17 27.337z"/>
+  <path d="m68.078 85.433-27.232-27.532v50.259l27.232 27.306z"/>
+  <rect transform="matrix(.71149 .7027 -.71149 .7027 0 0)" x="48.262" y="-48.262" width="26.821" height="27.705"/>
+  <rect transform="matrix(.71149 .7027 -.71149 .7027 0 0)" x="48.262" y="-20.558" width="26.821" height="27.705"/>
+  <rect transform="matrix(.71149 .7027 -.71149 .7027 0 0)" x="48.262" y="20.558" width="26.821" height="27.705"/>
+  <rect transform="matrix(.71149 .7027 -.71149 .7027 0 0)" x="75.083" y="-48.262" width="26.821" height="27.705"/>
+  <rect transform="matrix(.71149 .7027 -.71149 .7027 0 0)" x="101.9" y="-48.262" width="26.821" height="27.705"/>
+  <rect transform="matrix(.71149 .7027 -.71149 .7027 0 0)" x="115.32" y="-48.262" width="26.821" height="27.705"/>
+  <rect transform="matrix(.71149 .7027 -.71149 .7027 0 0)" x="88.494" y="-48.262" width="26.821" height="27.705"/>
+  <rect transform="matrix(.71149 .7027 -.71149 .7027 0 0)" x="61.673" y="-48.262" width="26.821" height="27.705"/>
+  <rect transform="matrix(.71149 .7027 -.71149 .7027 0 0)" x="48.262" y="-7.1471" width="26.821" height="27.705"/>
+  <rect transform="matrix(.71149 .7027 -.71149 .7027 0 0)" x="48.262" y="-34.852" width="26.821" height="27.705"/>
+  <rect transform="matrix(.71149 .7027 -.71149 .7027 0 0)" x="48.262" y="7.1471" width="26.821" height="27.705"/>
+ </g>
+</svg>
