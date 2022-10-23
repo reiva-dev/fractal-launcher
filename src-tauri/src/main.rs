@@ -3,6 +3,7 @@
     windows_subsystem = "windows"
 )]
 
+use anyhow::Context;
 use tauri::Manager;
 use tracing_subscriber::Layer;
 use tracing_subscriber::util::SubscriberInitExt;
@@ -14,8 +15,12 @@ fn greet(name: &str) -> String {
     format!("Hello, {}! You've been greeted from Rust!", name)
 }
 
+
+// Line 45:
+// For some reason, the process cannot be terminated normally by app.exit(0) without let binding.
+#[allow(clippy::let_and_return)]
 #[tokio::main]
-async fn main() -> Result<(), std::io::Error> {
+async fn main() -> Result<(), anyhow::Error> {
     dotenvy::dotenv().ok();
     let appender = tracing_appender::rolling::daily(std::path::Path::new("./logs/"), "debug.log");
     let (non_blocking_appender, _guard) = tracing_appender::non_blocking(appender);
@@ -32,12 +37,12 @@ async fn main() -> Result<(), std::io::Error> {
 
     tauri::async_runtime::set(tokio::runtime::Handle::current());
 
-    let quit = tauri::CustomMenuItem::new(SystemTrayMenuSignal::Quit, "Quit Nekomata");
+    let quit = tauri::CustomMenuItem::new(SystemTrayMenuSignal::Quit, "Quit Fractal Launcher");
     let menu = tauri::SystemTrayMenu::new().add_item(quit);
     let tray = tauri::SystemTray::new()
         .with_menu(menu);
 
-    tauri::Builder::default()
+    let app = tauri::Builder::default()
         .system_tray(tray)
         .on_system_tray_event(move |app, event| match event {
             tauri::SystemTrayEvent::LeftClick { .. } => {
@@ -58,8 +63,8 @@ async fn main() -> Result<(), std::io::Error> {
             greet
         ])
         .run(tauri::generate_context!())
-        .expect("tauri handler excp");
-    Ok(())
+        .with_context(|| "cannot start tauri");
+    app
 }
 
 #[derive(Debug, Clone)]

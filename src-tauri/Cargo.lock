@@ -653,11 +653,13 @@ dependencies = [
 name = "fractal-launcher"
 version = "0.0.0"
 dependencies = [
+ "anyhow",
  "dotenvy",
  "serde",
  "serde_json",
  "tauri",
  "tauri-build",
+ "thiserror",
  "tokio",
  "tracing",
  "tracing-appender",

@@ -1,4 +1,3 @@
-import { invoke } from "@tauri-apps/api";
 import { styled } from "solid-styled-components";
 
 function PlaceHolder() {
@@ -14,7 +13,7 @@ const PlaceHolderCss = styled.div`
   height: calc(100vh - 96px);
   overflow-y: scroll;
   overflow-x: hidden;
-  background-color: #73777a;
+  background-color: #232426;
   padding: 12px;
   display: flex;
   flex-grow: 3;
