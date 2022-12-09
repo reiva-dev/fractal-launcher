@@ -1,28 +1,23 @@
 import type { Component } from 'solid-js';
-import { styled } from 'solid-styled-components';
 import HeaderTools from './app/HeaderTools';
 import PlaceHolder from './app/PlaceHolder';
-import SideBar from './app/SideBar';
+import { app } from './App.css'
 
 import TitleBar from './windowed/TitleBar';
+import FooterNavi from './app/FooterNavi';
 
 const App: Component = () => {
   return (
-    <>
+    <div class={app.main}>
       <TitleBar />
       <HeaderTools />
-      <AppWrap>
-        <SideBar />
+      <div class={app.wrap}>
+        { /* Todo: Impl Need Mod Launcher Components */ }
         <PlaceHolder />
-      </AppWrap>
-    </>
+      </div>
+      <FooterNavi />
+    </div>
   );
 };
-
-const AppWrap = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-grow: 0;
-`;
 
 export default App;

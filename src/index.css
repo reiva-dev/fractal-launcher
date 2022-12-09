@@ -1,9 +1,17 @@
+@import './styles/_reset.css';
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+  height: 100vh;
+  width: 100vw;
+  color: #6d6d6d;
+  user-select: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

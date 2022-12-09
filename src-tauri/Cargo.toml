@@ -1,9 +1,9 @@
 [package]
 name = "fractal-launcher"
 version = "0.0.0"
-description = "A Tauri App"
+description = "Launcher and Mod Management application for Modded Minecraft"
 authors = ["ReiRokusanami"]
-license = "AGPL-3.0-or-later"
+license = "GPL-3.0-or-later"
 repository = ""
 edition = "2021"
 rust-version = "1.57"
@@ -16,7 +16,7 @@ tauri-build = { version = "1.1", features = [] }
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.1", features = ["api-all", "system-tray"] }
+tauri = { version = "1.1", features = ["api-all", "clipboard", "system-tray"] }
 
 tokio = { version = "1", features = ["full"] }
 tracing = "0.1"
@@ -24,8 +24,14 @@ tracing-subscriber = { version = "0.3", features = ["registry", "fmt", "env-filt
 tracing-appender = "0.2"
 
 dotenvy = "0.15"
+walkdir = "2.3.2"
 anyhow = "1"
 thiserror = "1"
+
+sqlx = { version = "0.6.2", features = ["sqlite", "runtime-tokio-rustls", "time"] }
+url = "2.3.1"
+reqwest = { version = "0.11", features = ["json"] }
+
 
 [features]
 # by default Tauri runs in production mode

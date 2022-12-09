@@ -9,8 +9,6 @@ function PlaceHolder() {
 }
 
 const PlaceHolderCss = styled.div`
-  width: max-content;
-  height: calc(100vh - 96px);
   overflow-y: scroll;
   overflow-x: hidden;
   background-color: #232426;

@@ -1,7 +1,5 @@
-# Tauri + Solid + Typescript
-
-This template should help get you started developing with Tauri, Solid and Typescript in Vite.
-
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+<p align="left">
+<picture>
+  <img alt="Fractal Launcher" src="/.github/fractal_launcher_opt.svg" width="50%">
+</picture>
+</p>
