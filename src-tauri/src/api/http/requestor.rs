@@ -89,9 +89,6 @@ pub struct Requestor<T>(pub(super) T);
 /// This implementation uses [`reqwest::Client`].
 /// `&'static reqwest::Client` is used internally.
 impl<T: Request<Client = reqwest::Client>> Requestor<T> {
-    /// The argument required for the initialization process is the return value of this order.
-    /// 
-    /// An entity is required, but a [`Default`] or empty structure is also acceptable.
     pub fn new(order: T) -> Self {
         Self(order)
     }
