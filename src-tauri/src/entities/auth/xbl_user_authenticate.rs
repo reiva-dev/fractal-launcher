@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::api::http::{Request, RequestSyntheticMix1};
+use crate::api::http::Request;
 
 use super::{FlowSteppable, FlowDependent};
 
