@@ -8,6 +8,7 @@ use tauri::{AppHandle, State, ClipboardManager, Manager};
 use crate::{entities::auth::{
     MSADeviceVerifingRequest,
     MSADeviceVerifingResponse,
+    MSADeviceAuthenticateRequest,
     MSADeviceAuthenticateReponse,
     MSADeviceFlowError, 
     MSADeviceFlowErrorResponse,
@@ -15,7 +16,7 @@ use crate::{entities::auth::{
     XboxLiveUserAuthenticateResponse,
     XBoxLiveSTSAuthorizeRequest,
     XBoxLiveSTSAuthorizeResponse,
-    FlowSteppable, MSADeviceAuthenticateRequest
+    FlowSteppable
 }, api::http::Requestor};
 
 
