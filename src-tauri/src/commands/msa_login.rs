@@ -29,16 +29,19 @@ pub async fn login(handler: AppHandle) {
         .await
         .unwrap();
 
+
     let ms_view = tauri::WindowBuilder::new(&handler, "mslogin", tauri::WindowUrl::External(
-        res.verification_uri().parse::<url::Url>().unwrap()))
+            res.verification_uri().parse::<url::Url>().unwrap()))
         .enable_clipboard_access()
+        .disable_file_drop_handler()
+        .resizable(false)
+        .always_on_top(true)
         .build()
         .unwrap();
 
-    ms_view.set_title(&format!("Paste your verification code. (effective time {}s)", res.expires_in())).unwrap();
+    clipboard.write_text(res.user_code()).unwrap();
 
-    clipboard.write_text(res.user_code())
-        .expect("cannot write `user_code`");
+    ms_view.set_title(&format!("Paste your verification code. (effective time {}s)", res.expires_in())).unwrap();
 
     let interval = res.interval();
     let expired_in = res.expires_in();
@@ -47,6 +50,7 @@ pub async fn login(handler: AppHandle) {
         let mut retry = 0;
         loop {
             tokio::time::sleep(Duration::from_secs(interval as u64)).await;
+
             let req = Requestor::synthetic(MSADeviceAuthenticateReponse::default())
                 .execute_sythetic(res.device_code().to_string())
                 .await
@@ -77,12 +81,10 @@ pub async fn login(handler: AppHandle) {
         }
     });
 
-    clipboard.write_text("")
-        .expect("cannot clearing clipboard");
-
     let msa_cert = match polling.await.expect("bugged") {
         Ok(authed) => {
             tracing::info!("(√) MSA verified.");
+            clipboard.write_text("").expect("cannot clearing clipboard");
             authed
         },
         Err(reason) => {
