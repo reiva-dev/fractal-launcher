@@ -17,7 +17,7 @@ mod response;
 mod requestor;
 
 pub use self::{
-    requestor::{Requestor, Request, RequestSyntheticMix1},
+    requestor::{Requestor, Request},
     response::Response,
     refresh::Refresh
 };
