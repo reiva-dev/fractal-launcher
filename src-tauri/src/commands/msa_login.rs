@@ -6,6 +6,7 @@ use tokio::task::JoinHandle;
 use tauri::{AppHandle, State, ClipboardManager, Manager};
 
 use crate::{entities::auth::{
+    MSADeviceVerifingRequest,
     MSADeviceVerifingResponse,
     MSADeviceAuthenticateReponse,
     MSADeviceFlowError, 
@@ -14,7 +15,7 @@ use crate::{entities::auth::{
     XboxLiveUserAuthenticateResponse,
     XBoxLiveSTSAuthorizeRequest,
     XBoxLiveSTSAuthorizeResponse,
-    FlowSteppable
+    FlowSteppable, MSADeviceAuthenticateRequest
 }, api::http::Requestor};
 
 
@@ -23,7 +24,7 @@ pub async fn login(handler: AppHandle) {
     let _pool: State<'_, SqlitePool> = handler.state();
     let mut clipboard = handler.clipboard_manager();
 
-    let res = Requestor::new(MSADeviceVerifingResponse::default())
+    let res = Requestor::new(MSADeviceVerifingRequest)
         .execute().await.unwrap()
         .map_future(|res| res.json::<MSADeviceVerifingResponse>())
         .await
@@ -51,8 +52,8 @@ pub async fn login(handler: AppHandle) {
         loop {
             tokio::time::sleep(Duration::from_secs(interval as u64)).await;
 
-            let req = Requestor::synthetic(MSADeviceAuthenticateReponse::default())
-                .execute_sythetic(res.device_code().to_string())
+            let req = Requestor::new(MSADeviceAuthenticateRequest::new(res.device_code()))
+                .execute()
                 .await
                 .map_err(|_| MSADeviceFlowPollingError::Unknown)?;
 

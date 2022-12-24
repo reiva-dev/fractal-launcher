@@ -15,9 +15,18 @@ pub trait FlowSteppable<T: FlowDependent> {
 }
 
 pub use self::{
-    msa_device_verifing::MSADeviceVerifingResponse,
-    msa_device_authenticate::MSADeviceAuthenticateReponse,
-    msa_device_flow_error::{MSADeviceFlowError, MSADeviceFlowErrorResponse},
+    msa_device_verifing::{
+        MSADeviceVerifingRequest,
+        MSADeviceVerifingResponse
+    },
+    msa_device_authenticate::{
+        MSADeviceAuthenticateRequest,
+        MSADeviceAuthenticateReponse
+    },
+    msa_device_flow_error::{
+        MSADeviceFlowError,
+        MSADeviceFlowErrorResponse
+    },
     xbl_user_authenticate::{
         XboxLiveUserAuthenticateRequest,
         XboxLiveUserAuthenticateProperty,

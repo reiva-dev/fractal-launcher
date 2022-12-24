@@ -2,6 +2,9 @@
 
 use crate::api::http::Request;
 
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+pub struct MSADeviceVerifingRequest;
+
 /// This structure corresponds to the Microsoft Azure ActiveDirectory device authorization response.
 /// 
 /// **Note**: that it is of type `String`, not `Url`, 
@@ -39,7 +42,7 @@ impl MSADeviceVerifingResponse {
 }
 
 #[async_trait::async_trait]
-impl Request for MSADeviceVerifingResponse {
+impl Request for MSADeviceVerifingRequest {
     type Client = reqwest::Client;
     type Response = reqwest::Response;
     type Rejection = VerifingRequestRejection;

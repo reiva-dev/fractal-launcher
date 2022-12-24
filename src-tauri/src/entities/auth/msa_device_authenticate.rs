@@ -1,6 +1,15 @@
-use crate::api::http::{http_client, RequestSyntheticMix1, Refresh};
+use crate::api::http::{http_client, Refresh, Request};
 
 use super::FlowDependent;
+
+#[derive(Debug, serde::Serialize)]
+pub struct MSADeviceAuthenticateRequest<'a>(&'a str);
+
+impl<'a> MSADeviceAuthenticateRequest<'a> {
+    pub fn new(device_code: &'a str) -> Self {
+        Self(device_code)
+    }
+}
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, Default)]
 pub struct MSADeviceAuthenticateReponse {
@@ -27,14 +36,12 @@ impl FlowDependent for MSADeviceAuthenticateReponse {
 }
 
 #[async_trait::async_trait]
-impl RequestSyntheticMix1 for MSADeviceAuthenticateReponse {
+impl<'a> Request for MSADeviceAuthenticateRequest<'a> {
     type Client = reqwest::Client;
     type Response = reqwest::Response;
     type Rejection = DeviceAuthenticateRejection;
 
-    type Mix1 = String;
-
-    async fn request(self, client: &Self::Client, outer_1: Self::Mix1) -> Result<Self::Response, Self::Rejection> {
+    async fn request(self, client: &Self::Client) -> Result<Self::Response, Self::Rejection> {
         let url = "https://login.microsoftonline.com/consumers/oauth2/v2.0/token"
             .parse::<url::Url>()
             .map_err(DeviceAuthenticateRejection::UrlParse)?;
@@ -43,7 +50,7 @@ impl RequestSyntheticMix1 for MSADeviceAuthenticateReponse {
             .form(&[
                 ("grant_type", "urn:ietf:params:oauth:grant-type:device_code"),
                 ("client_id", "3ea1cbe9-4e3a-4a2f-85e7-cca409b6a8ca"),
-                ("device_code", &outer_1)
+                ("device_code", self.0)
             ])
             .send()
             .await
