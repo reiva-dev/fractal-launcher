@@ -78,6 +78,7 @@ pub trait Request: Sized + serde::ser::Serialize {
     async fn request(self, client: &Self::Client) -> Result<Self::Response, Self::Rejection>;
 }
 
+#[deprecated]
 #[async_trait::async_trait]
 pub trait RequestSyntheticMix1: Sized + serde::ser::Serialize {
     type Client;
@@ -114,6 +115,7 @@ impl<T: Request<Client = reqwest::Client>> Requestor<T> {
     }
 }
 
+#[deprecated]
 impl<T: RequestSyntheticMix1<Client = reqwest::Client>> Requestor<T> {
     /// Initialization process used when requesting external values.
     /// 
