@@ -7,6 +7,7 @@
 //! This module uses the following static [`http_client()`] to perform the processing.
 //! 
 //! Dependency
+//! - [`serde`]
 //! - [`async_trait`]
 //! - [`reqwest`]
 //! - [`once_cell`]

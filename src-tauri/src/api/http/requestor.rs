@@ -21,31 +21,41 @@
 //! 
 //! ### Usage.
 //! ```rust,no_run
-//! #[derive(Debug, Default)]
+//! #[derive(Debug, serde::Serialize)]
+//! pub struct AuthenticationDataRequest {
+//!     code: String
+//! }
+//! 
+//! impl AuthenticationDataRequest {
+//!     pub fn new(code: impl Into<String>) -> Self {
+//!         Self { code: code.into() }
+//!     }
+//! }
+//! 
+//! #[derive(Debug)]
 //! pub struct AuthenticationDataResponse {
 //!     token: String,
 //!     expired_in: i32
 //! }
 //! 
 //! #[async_trait::async_trait]
-//! impl Request for AuthenticationDataResponse {
+//! impl Request for AuthenticationDataRequest {
 //!     type Client: reqwest::Client;
 //!     type Response: reqwest::Response;
 //!     type Rejection: reqwest::Error;
 //!     async fn request(self, client: &Self::Client) -> Result<Self::Response, Self::Rejection> {
 //!         client.get("http://example.com/auth")
+//!             .json(self)
 //!             .send()
 //!             .await?
 //!     }
 //! }
 //! 
-//! let response = Requestor::new(AuthenticationDataResponse::default())
+//! let response = Requestor::new(AuthenticationDataRequest::new("123456"))
 //!     .execute()
-//!     .await
-//!     .unwrap()
+//!     .await?
 //!     .map(|res| res.json::<AuthenticationDataResponse>())
-//!     .await
-//!     .unwrap();
+//!     .await?;
 //! ```
 
 use super::{Response, http_client, Refresh};
