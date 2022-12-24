@@ -1,6 +1,5 @@
 use std::time::Duration;
 
-use once_cell::sync::Lazy;
 use reqwest::StatusCode;
 use sqlx::SqlitePool;
 use tokio::task::JoinHandle;
@@ -18,22 +17,12 @@ use crate::{entities::auth::{
     FlowSteppable
 }, api::http::Requestor};
 
-pub fn http_client() -> &'static reqwest::Client {
-    static HTTP_CLIENT: Lazy<reqwest::Client> = Lazy::new(|| {
-        reqwest::Client::new()
-    });
-    &HTTP_CLIENT
-}
 
 #[tauri::command]
 pub async fn login(handler: AppHandle) {
     let _pool: State<'_, SqlitePool> = handler.state();
     let mut clipboard = handler.clipboard_manager();
 
-    // old
-    let client = http_client();
-
-    // new
     let res = Requestor::new(MSADeviceVerifingResponse::default())
         .execute().await.unwrap()
         .map_future(|res| res.json::<MSADeviceVerifingResponse>())
@@ -104,12 +93,12 @@ pub async fn login(handler: AppHandle) {
 
     let req = XboxLiveUserAuthenticateRequest::default().step(msa_cert);
 
-    let xsts_token = client.post("https://user.auth.xboxlive.com/user/authenticate")
-        .json(&req)
-        .send()
-        .await.unwrap();
+    let xsts_token = Requestor::new(req)
+        .execute()
+        .await
+        .unwrap();
 
-    let xsts_token = match xsts_token.json::<XboxLiveUserAuthenticateResponse>().await {
+    let xsts_token = match xsts_token.map_future(|xsts| xsts.json::<XboxLiveUserAuthenticateResponse>()).await {
         Ok(authed) => {
             tracing::info!("(√) Xbox Secure Token Service (XSTS) authorized.");
             authed
@@ -123,12 +112,12 @@ pub async fn login(handler: AppHandle) {
 
     let req = XBoxLiveSTSAuthorizeRequest::default().step(xsts_token);
 
-    let mc_user_token = client.post("https://xsts.auth.xboxlive.com/xsts/authorize")
-        .json(&req)
-        .send()
-        .await.unwrap();
+    let mc_user_token = Requestor::new(req)
+        .execute()
+        .await
+        .unwrap();
 
-    let _mc_user_token = match mc_user_token.json::<XBoxLiveSTSAuthorizeResponse>().await {
+    let _mc_user_token = match mc_user_token.map_future(|token| token.json::<XBoxLiveSTSAuthorizeResponse>()).await {
         Ok(authed) => {
             tracing::info!("(√) Minecraft user authorized with XSTS.");
             authed
