@@ -25,7 +25,7 @@ pub use self::{
 /// This function returns a static reference [`reqwest::Client`].
 /// 
 /// Internally, use [`once_cell::sync::Lazy`] to handle the creation of the Client statically.
-pub fn http_client() -> &'static reqwest::Client {
+fn http_client() -> &'static reqwest::Client {
     use once_cell::sync::Lazy;
     static HTTP_CLIENT: Lazy<reqwest::Client> = Lazy::new(|| {
         reqwest::Client::new()

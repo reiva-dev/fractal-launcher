@@ -1,4 +1,3 @@
-use crate::api::http::{http_client, Refresh, Request};
 
 use super::FlowDependent;
 
@@ -71,8 +70,7 @@ impl Refresh for MSADeviceAuthenticateReponse {
             .parse::<url::Url>()
             .map_err(DeviceAuthenticateRejection::UrlParse)?;
 
-        let refreshed = http_client()
-            .post(url)
+        let refreshed = client.post(url)
             .form(&[
                 ("grant_type", "refresh_token"),
                 ("client_id", "3ea1cbe9-4e3a-4a2f-85e7-cca409b6a8ca"),
