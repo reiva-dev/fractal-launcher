@@ -9,18 +9,20 @@ use super::{Arguments, Asset, Engine, JavaVersion, Library, Logging};
 
 #[derive(Debug, serde::Deserialize)]
 pub struct Package {
-    arguments: Arguments,
+    arguments: Option<Arguments>,
+    #[serde(rename = "minecraftArguments")]
+    minecraft_arguments: Option<String>,
     #[serde(rename = "assetIndex")]
     asset_index: Asset,
     assets: String,
     #[serde(rename = "complianceLevel")]
-    compliance_level: i32,
+    compliance_level: Option<i32>,
     #[serde(rename = "downloads")]
     engine: HashMap<String, Engine>,
     #[serde(rename = "javaVersion")]
-    java_version: JavaVersion,
+    java_version: Option<JavaVersion>,
     libraries: Vec<Library>,
-    logging: Logging,
+    logging: Option<Logging>,
 
     id: String,
     #[serde(rename = "mainClass")]
