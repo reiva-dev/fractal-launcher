@@ -44,11 +44,3 @@ impl Version {
         &self.release_time
     }
 }
-
-#[derive(Debug, thiserror::Error, serde::Serialize)]
-pub enum VersionManifestRejection {
-    #[error("failed parse url. {0}")]
-    UrlParse(String),
-    #[error("failed send request. {0}")]
-    Reqwest(String)
-}

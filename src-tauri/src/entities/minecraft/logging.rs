@@ -1,9 +1,9 @@
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct Logging {
     client: CliengLogging
 }
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct CliengLogging {
     argument: String,
     file: LoggingFile,
@@ -11,7 +11,7 @@ pub struct CliengLogging {
     logging_type: String
 }
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct LoggingFile {
     id: String,
     sha1: String,

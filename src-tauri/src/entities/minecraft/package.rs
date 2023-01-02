@@ -7,7 +7,7 @@ use std::collections::HashMap;
 
 use super::{Arguments, Asset, Engine, JavaVersion, Library, Logging};
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct Package {
     arguments: Option<Arguments>,
     #[serde(rename = "minecraftArguments")]

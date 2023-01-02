@@ -1,40 +1,38 @@
-mod msa_device_verifing;
-mod msa_device_authenticate;
-mod msa_device_flow_error;
+//! Copyright 2022 - Fractal Launcher - ReiRokusanami
 
-mod xbl_xsts_authorize;
-mod xbl_user_authenticate;
+mod request;
 
-pub trait FlowDependent {
-    type Flowed;
-    fn flow(&self) -> Self::Flowed;
-}
-
-pub trait FlowSteppable<T: FlowDependent> {
-    fn step(self, dep: T) -> Self;
-}
+mod device_flow;
+mod xboxlive;
 
 pub use self::{
-    msa_device_verifing::{
-        MSADeviceVerifingRequest,
-        MSADeviceVerifingResponse
+    device_flow::{
+        verifing::MSADeviceVerifingResponse,
+        authenticate::MSADeviceAuthenticateReponse,
+        error::{MSADeviceFlowError, MSADeviceFlowErrorResponse},
     },
-    msa_device_authenticate::{
-        MSADeviceAuthenticateRequest,
-        MSADeviceAuthenticateReponse
+    xboxlive::{
+        user_authenticate::XboxLiveUserAuthenticateResponse,
+        xsts_authorize::XBoxLiveSTSAuthorizeResponse,
     },
-    msa_device_flow_error::{
-        MSADeviceFlowError,
-        MSADeviceFlowErrorResponse
-    },
-    xbl_user_authenticate::{
-        XboxLiveUserAuthenticateRequest,
-        XboxLiveUserAuthenticateProperty,
-        XboxLiveUserAuthenticateResponse
-    },
-    xbl_xsts_authorize::{
-        XBoxLiveSTSAuthorizeRequest,
-        XBoxLiveSTSAuthorizeProperty,
-        XBoxLiveSTSAuthorizeResponse
+
+    request::{
+        msa_device_verifing::{
+            MSADeviceVerifingRequest,
+            VerifingRequestRejection
+        },
+        msa_device_authenticate::{
+            MSADeviceAuthenticateRequest,
+            MSADeviceAuthenticateRefresh,
+            DeviceAuthenticateRejection
+        },
+        xbl_user_authenticate::{
+            XboxLiveUserAuthenticateRequest,
+            XboxLiveUserAuthenticateRejection
+        },
+        xbl_xsts_authorize::{
+            XBoxLiveSTSAuthorizeRequest,
+            XBoxLiveSTSAuthorizeRejection
+        }
     }
 };

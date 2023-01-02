@@ -1,3 +1,5 @@
+//! Copyright 2022 - Fractal Launcher - ReiRokusanami
+
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct MSADeviceFlowErrorResponse {
     error: String,

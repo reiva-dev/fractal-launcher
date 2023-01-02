@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use super::Rule;
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct Library {
     name: String,
     downloads: Target,
@@ -11,13 +11,13 @@ pub struct Library {
     rules: Option<Vec<Rule>>
 }
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct Target {
     artifact: Option<Artifact>,
     classifiers: Option<HashMap<String, Artifact>>
 }
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct Artifact {
     path: String,
     sha1: String,
@@ -25,7 +25,7 @@ pub struct Artifact {
     url: String
 }
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct Extraction {
     exclude: Vec<String>
 }

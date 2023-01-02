@@ -1,6 +1,4 @@
-use crate::api::http::{Refresh, Request};
-
-use super::FlowDependent;
+use crate::api::http::{Request, Refresh};
 
 #[derive(Debug, serde::Serialize)]
 pub struct MSADeviceAuthenticateRequest<'a>(&'a str);
@@ -8,30 +6,6 @@ pub struct MSADeviceAuthenticateRequest<'a>(&'a str);
 impl<'a> MSADeviceAuthenticateRequest<'a> {
     pub fn new(device_code: &'a str) -> Self {
         Self(device_code)
-    }
-}
-
-#[derive(Debug, serde::Serialize, serde::Deserialize, Default)]
-pub struct MSADeviceAuthenticateReponse {
-    token_type: String,
-    scope: String,
-    expires_in: i32,
-    ext_expires_in: i32,
-    access_token: String,
-    refresh_token: String
-}
-
-impl MSADeviceAuthenticateReponse {
-    pub fn access_token(&self) -> &str {
-        &self.access_token
-    }
-}
-
-impl FlowDependent for MSADeviceAuthenticateReponse {
-    type Flowed = String;
-
-    fn flow(&self) -> Self::Flowed {
-        self.access_token.clone()
     }
 }
 
@@ -60,8 +34,17 @@ impl<'a> Request for MSADeviceAuthenticateRequest<'a> {
     }
 }
 
+#[derive(Debug, serde::Serialize)]
+pub struct MSADeviceAuthenticateRefresh<'a>(&'a str);
+
+impl<'a> MSADeviceAuthenticateRefresh<'a> {
+    pub fn new(refresh_code: &'a str) -> Self {
+        Self(refresh_code)
+    }
+}
+
 #[async_trait::async_trait]
-impl Refresh for MSADeviceAuthenticateReponse {
+impl<'a> Refresh for MSADeviceAuthenticateRefresh<'a> {
     type Client = reqwest::Client;
     type Response = reqwest::Response;
     type Rejection = DeviceAuthenticateRejection;
@@ -75,7 +58,7 @@ impl Refresh for MSADeviceAuthenticateReponse {
             .form(&[
                 ("grant_type", "refresh_token"),
                 ("client_id", "3ea1cbe9-4e3a-4a2f-85e7-cca409b6a8ca"),
-                ("refresh_token", &self.refresh_token)
+                ("refresh_token", self.0)
             ])
             .send().await
             .map_err(DeviceAuthenticateRejection::Reqwest)?;
